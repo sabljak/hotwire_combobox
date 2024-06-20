@@ -17,6 +17,7 @@ class HotwireCombobox::Component
         dialog_label:         nil,
         form:                 nil,
         free_text:            false,
+        hidden_field:         {},
         id:                   nil,
         input:                {},
         label:                nil,
@@ -27,9 +28,9 @@ class HotwireCombobox::Component
         options:              [],
         value:                nil,
         **rest
-    @view, @autocomplete, @id, @name, @value, @form, @async_src, @label, @free_text,
+    @view, @autocomplete, @id, @name, @value, @form, @async_src, @label, @free_text, @hidden_field,
     @name_when_new, @open, @data, @mobile_at, @multiselect_chip_src, @options, @dialog_label =
-      view, autocomplete, id, name.to_s, value, form, async_src, label, free_text,
+      view, autocomplete, id, name.to_s, value, form, async_src, label, free_text, hidden_field,
       name_when_new, open, data, mobile_at, multiselect_chip_src, options, dialog_label
 
     @combobox_attrs = input.reverse_merge(rest).deep_symbolize_keys
@@ -62,12 +63,15 @@ class HotwireCombobox::Component
 
 
   def hidden_field_attrs
-    apply_customizations_to :hidden_field, base: {
+
+    base = {
       id: hidden_field_id,
       name: hidden_field_name,
       data: hidden_field_data,
       value: hidden_field_value
-    }
+    }.merge @hidden_field
+
+    apply_customizations_to :hidden_field, base: base
   end
 
 

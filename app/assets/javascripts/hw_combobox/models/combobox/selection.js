@@ -118,6 +118,7 @@ Combobox.Selection = Base => class extends Base {
   _lockInSelection() {
     if (this._shouldLockInSelection) {
       this._forceSelectionAndFilter(this._ensurableOption, "hw:lockInSelection")
+      this.hiddenFieldTarget.dispatchEvent(new Event("change", { bubbles: false }))
     }
   }
 
